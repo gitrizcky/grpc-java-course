@@ -1,0 +1,61 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.12'
+    }
+}
+
+plugins {
+    id 'idea'
+    id "com.google.protobuf" version "0.8.12"
+    id 'java'
+}
+
+group 'com.github.gitrizcky.grpc'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    //https://github.com/grpc/grpc-java
+    implementation 'io.grpc:grpc-netty-shaded:1.31.1'
+    implementation 'io.grpc:grpc-protobuf:1.31.1'
+    implementation 'io.grpc:grpc-stub:1.31.1'
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    // https://mvnrepository.com/artifact/io.grpc/grpc-services
+    compile group: 'io.grpc', name: 'grpc-services', version: '1.31.1'
+
+    // https://mvnrepository.com/artifact/org.mongodb/mongodb-driver-sync
+    compile group: 'org.mongodb', name: 'mongodb-driver-sync', version: '4.1.0'
+
+    // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
+    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.30'
+
+    // https://mvnrepository.com/artifact/ch.qos.logback/logback-classic
+    testCompile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+
+
+
+
+}
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:3.13.0"
+    }
+    plugins {
+        grpc {
+            artifact = 'io.grpc:protoc-gen-grpc-java:1.31.1'
+        }
+    }
+    generateProtoTasks {
+        all()*.plugins {
+            grpc {}
+        }
+    }
+}
